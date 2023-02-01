@@ -1,28 +1,53 @@
 #!/usr/bin/env lua
 
+-- Creates terminator
+local createTerminator = require('terminator')
+
+local terminator = createTerminator()
+local triggerTermination = function() terminator:trigger() end
+
+-- Creates game loop
+local createGame = require('game')
+
+local game = createGame(triggerTermination)
+terminator:onTerminate(function()
+   game:cleanup()
+end)
+
+
+-- Inits event loop
 local uv = require('luv')
 
-local function gameLoop()
-   print("running")
-end
-
+-- Ticks game
 local gameTimer = uv.new_timer()
-gameTimer:start(250, 250, gameLoop)
-
-
-local function exit(code, message)
-   print(message or "exit")
-   os.exit(code or 0)
-end
-
-local sigint = uv.new_signal()
-uv.signal_start(sigint, "sigint", function()
-   exit()
+gameTimer:start(0, 50, function()
+   game:tick()
+end)
+terminator:onTrigger(function()
+   uv.close(gameTimer)
 end)
 
-local sigterm = uv.new_signal()
-uv.signal_start(sigterm, "sigterm", function()
-   exit()
+-- Handles sigint
+intSignal = uv.new_signal()
+uv.signal_start(intSignal, "sigint", function()
+   triggerTermination()
+end)
+terminator:onTrigger(function()
+   uv.close(intSignal)
 end)
 
+-- Handles sigterm
+termSignal = uv.new_signal()
+uv.signal_start(termSignal, "sigterm", function()
+   triggerTermination()
+end)
+terminator:onTrigger(function()
+   uv.close(termSignal)
+end)
+
+
+-- Launches appliaction
 uv.run()
+
+-- Cleans up aplication
+terminator:terminate()
