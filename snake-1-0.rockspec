@@ -3,6 +3,7 @@ version = "1-0"
 dependencies = {
    "lua >= 5.4",
    "luv >= 1.44.2-1",
+   "luaposix >= 36.1-1",
 }
 build = {
    type = "builtin"
