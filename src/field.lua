@@ -44,8 +44,8 @@ local function new()
          for x = 1, self.width do
             local symbol = "."
             for _, object in ipairs(objects) do
-               if object.symbol(x, y) then
-                  symbol = object.symbol(x, y)
+               if object:symbol(x, y) then
+                  symbol = object:symbol(x, y)
                   break
                end
             end
