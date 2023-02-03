@@ -19,7 +19,8 @@ local function new()
     assert(posix.tcsetattr(posix.STDIN_FILENO, posix.TCSANOW, self.terminalState))
   end
 
-  -- Returns pressed key.
+  -- Returns pressed key like that:
+  -- { key = "left", directionKey = true, }
   function i:getEvent()
     local input = io.read()
 
@@ -27,18 +28,23 @@ local function new()
       return nil
     end
 
+    -- Checks direction key
     input = string.sub(input, -3)
     if input == "\27[A" then
-      return "up"
+      return { directionKey = true, key = "up", }
     elseif input == "\27[B" then
-      return "down"
+      return { directionKey = true, key = "down", }
     elseif input == "\27[C" then
-      return "right"
+      return { directionKey = true, key = "right", }
     elseif input == "\27[D" then
-      return "left"
+      return { directionKey = true, key = "left", }
     end
 
-    return string.sub(input, -1)
+    -- Returns normal key
+    return {
+      directionKey = false,
+      key = string.sub(input, -1),
+    }
   end
 
   return i

@@ -5,16 +5,6 @@ local createField = require("field")
 local createSnake = require("snake")
 local createFood = require("food")
 
-local function isDirection(event)
-   if event == "left" or
-      event == "right" or
-      event == "up" or
-      event == "down" then
-      return true
-   end
-   return false
-end
-
 local function new(quit)
    local game = {
       quit = quit
@@ -34,8 +24,8 @@ local function new(quit)
       -- Handles user event
       local event = self.input:getEvent()
       if event then
-         if isDirection(event) then
-            self.snake:setDirection(event)
+         if event.directionKey then
+            self.snake:setDirection(event.key)
          end
       end
 
