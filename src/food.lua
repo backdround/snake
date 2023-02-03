@@ -26,7 +26,7 @@ local function new(fieldWidth, fieldHeight)
       return {
          x = self.x,
          y = self.y,
-         symbol = "O",
+         symbol = "#",
       }
    end
 

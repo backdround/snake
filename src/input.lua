@@ -3,20 +3,12 @@
 
 posix = require("posix")
 
-local function shallowcopy(t)
-  copy = {}
-  for key, value in pairs(t) do
-    copy[key] = value
-  end
-  return copy
-end
-
 local function new()
   i = {}
   i.terminalState = posix.tcgetattr(posix.STDIN_FILENO)
 
   -- Configures terminal for get events without lock
-  i.newAttributes = shallowcopy(i.terminalState)
+  i.newAttributes = table.copy(i.terminalState)
   i.newAttributes.lflag = i.newAttributes.lflag & ~posix.ICANON & ~posix.ECHO
   i.newAttributes.cc[posix.VMIN] = 0
   i.newAttributes.cc[posix.VTIME] = 0

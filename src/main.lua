@@ -3,6 +3,18 @@
 -- Inits
 math.randomseed(os.time())
 
+function table.copy (t)
+   if type(t) == "table" then
+      local copy = {}
+      for key, value in pairs(t) do
+         copy[key] = table.copy(value)
+      end
+      return copy
+   else
+      return t
+   end
+end
+
 -- Creates terminator
 local createTerminator = require('terminator')
 

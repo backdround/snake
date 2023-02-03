@@ -5,11 +5,12 @@ local function new(fieldWidth, fieldHeight)
       fieldWidth = fieldWidth,
       fieldHeight = fieldHeight,
       direction = "right",
-      bodyPartSymbol = "#",
+      bodyPartSymbol = "o",
       bodyParts = {},
       head = {
          x = 0,
          y = math.floor(fieldHeight / 2),
+         symbol = "O",
       },
    }
 
@@ -48,8 +49,18 @@ local function new(fieldWidth, fieldHeight)
    end
 
    function snake:_pushBody()
-      table.insert(self.bodyParts, 1, self.head)
-      self.head = self:_getForwardCoordinates()
+      -- Adds head to body parts
+      local newBodyPart = {
+         x = self.head.x,
+         y = self.head.y,
+         symbol = self.bodyPartSymbol,
+      }
+      table.insert(self.bodyParts, 1, newBodyPart)
+
+      -- Moves head
+      local forwardCoordinates = self:_getForwardCoordinates()
+      self.head.x = forwardCoordinates.x
+      self.head.y = forwardCoordinates.y
    end
 
    function snake:_popBody()
@@ -57,24 +68,8 @@ local function new(fieldWidth, fieldHeight)
    end
 
    function snake:getRenderObjects()
-      renderParts = {}
-
-      -- Adds body parts
-      for _, part in ipairs(self.bodyParts) do
-         renderPart = {
-            x = part.x,
-            y = part.y,
-            symbol = self.bodyPartSymbol,
-         }
-         table.insert(renderParts, renderPart)
-      end
-
-      -- Adds head
-      table.insert(renderParts, {
-            x = self.head.x,
-            y = self.head.y,
-            symbol = self.bodyPartSymbol
-      })
+      local renderParts = table.copy(self.bodyParts)
+      table.insert(renderParts, table.copy(self.head))
 
       return renderParts
    end
