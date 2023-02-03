@@ -18,10 +18,15 @@ local function calculateFieldSize()
    local height = availableSize.height
 
    if math.floor(width) < height then
-      return nil, width * ratio, width
+      width, height = width * ratio, math.floor(width)
    else
-      return nil, height * ratio, height
+      width, height = height * ratio, height
    end
+
+   assert(math.tointeger(width))
+   assert(math.tointeger(height))
+
+   return nil, width, height
 end
 
 local function new()
