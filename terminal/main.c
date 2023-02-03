@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-static int l_get(lua_State* L) {
+static int l_getSize(lua_State* L) {
     struct winsize size;
 
     int r = ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
@@ -27,12 +27,18 @@ static int l_get(lua_State* L) {
     return 1;
 }
 
+static int l_clear(lua_State* L) {
+    printf("\33[H\33[J\33[3J");
+    return 0;
+}
+
 static const struct luaL_Reg functions[] = {
-    {"get", l_get},
+    {"getSize", l_getSize},
+    {"clear", l_clear},
     {NULL, NULL}
 };
 
-int luaopen_termsize(lua_State* L) {
+int luaopen_terminal(lua_State* L) {
     luaL_newlib(L, functions);
     return 1;
 }

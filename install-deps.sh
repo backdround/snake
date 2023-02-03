@@ -12,4 +12,4 @@ tree="$project_root/lua_modules"
 luarocks --tree="$tree" install --deps-only "$rockspec"
 
 # Installs local dependencies
-./termsize/install.sh "$(realpath "$tree")"
+./terminal/install.sh "$(realpath "$tree")"

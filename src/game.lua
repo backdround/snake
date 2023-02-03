@@ -1,4 +1,5 @@
 local createInput = require("input")
+local terminal = require("terminal")
 
 local function new(quit)
    game = {
@@ -7,6 +8,7 @@ local function new(quit)
    game.input = createInput()
 
    function game:tick()
+      terminal.clear()
       print("running")
       local event = self.input:getEvent()
       print("pressed: " .. tostring(event))

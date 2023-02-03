@@ -13,7 +13,7 @@ test -d "$install_path" || {
 }
 
 # Builds and installs module
-luarocks make --tree="$install_path" ./termsize-*.rockspec
+luarocks make --tree="$install_path" ./*.rockspec
 
 # Cleans up
 rm -rf *.so *.o

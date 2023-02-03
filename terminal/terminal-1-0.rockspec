@@ -1,4 +1,4 @@
-package = "termsize"
+package = "terminal"
 version = "1-0"
 dependencies = {
    "lua >= 5.4",
@@ -6,7 +6,7 @@ dependencies = {
 build = {
    type = "builtin",
    modules = {
-      termsize = {
+      terminal = {
          sources = { "./main.c" },
       },
    },
