@@ -12,5 +12,5 @@ build = {
    },
 }
 source = {
-   url = "git://github.com/backdround/lua-snake.git",
+   url = "git://github.com/backdround/snake.git",
 }
