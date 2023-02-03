@@ -26,6 +26,8 @@ local function new(quit)
       if event then
          if event.directionKey then
             self.snake:setDirection(event.key)
+         elseif event.key == " " then
+            self.quit()
          end
       end
 
