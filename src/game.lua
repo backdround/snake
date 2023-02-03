@@ -3,6 +3,15 @@ local createField = require("field")
 local createSnake = require("snake")
 local createFood = require("food")
 
+local function isDirection(event)
+   if event == "left" or
+      event == "right" or
+      event == "up" or
+      event == "down" then
+      return true
+   end
+   return false
+end
 
 local function new(quit)
    game = {
@@ -16,19 +25,19 @@ local function new(quit)
    end
    game.field = field
 
-   game.snake = createSnake(game.field.width, game.field.height)
-   game.food = createFood(game.field.width, game.field.height)
+   game.snake = createSnake(game.field:getSize())
+   game.food = createFood(game.field:getSize())
 
    function game:tick()
+      -- Handles user event
       local event = self.input:getEvent()
       if event then
-         if event == "left" or
-            event == "right" or
-            event == "up" or
-            event == "down" then
+         if isDirection(event) then
             self.snake:setDirection(event)
          end
       end
+
+      -- Handles snake logic
       if self.snake:isBumpIntoSelf() then
          self.quit()
       elseif self.food:consume(self.snake:getHead()) then
@@ -36,13 +45,14 @@ local function new(quit)
       else
          self.snake:forward()
       end
+
+      -- Renders
       self.field:render({self.snake, self.food})
    end
 
    function game:cleanup()
       self.input:cleanup()
       self.field:cleanup()
-      print("game cleanup")
    end
 
    return game
