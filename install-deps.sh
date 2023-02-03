@@ -1,4 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-luarocks --tree=./lua_modules install --deps-only ./snake-1-0.rockspec
+# Changes work directory to project root
+project_root="$(dirname "$(realpath "$0")")"
+cd "$project_root"
+
+rockspec="$(echo $project_root/snake-*.rockspec)"
+tree="$project_root/lua_modules"
+
+# Installs remote dependencies
+luarocks --tree="$tree" install --deps-only "$rockspec"
+
+# Installs local dependencies
+./termsize/install.sh "$(realpath "$tree")"
