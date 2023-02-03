@@ -1,7 +1,5 @@
 -- File describes snake object
 
-inspect = require("inspect")
-
 local function new(fieldWidth, fieldHeight)
    local snake = {
       fieldWidth = fieldWidth,
