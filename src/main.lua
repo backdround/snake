@@ -4,12 +4,19 @@
 local createTerminator = require('terminator')
 
 local terminator = createTerminator()
-local triggerTermination = function() terminator:trigger() end
+local triggerTermination = function(...)
+   terminator:trigger(...)
+end
 
 -- Creates game loop
 local createGame = require('game')
 
-local game = createGame(triggerTermination)
+local game, errorMessage = createGame(triggerTermination)
+if not game then
+   terminator:trigger(1, errorMessage)
+   terminator:terminate()
+end
+
 terminator:onTerminate(function()
    game:cleanup()
 end)

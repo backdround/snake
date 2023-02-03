@@ -1,5 +1,5 @@
 local createInput = require("input")
-local terminal = require("terminal")
+local createField = require("field")
 
 local function new(quit)
    game = {
@@ -7,11 +7,15 @@ local function new(quit)
    }
    game.input = createInput()
 
+   local field, errMessage = createField()
+   if not field then
+      return nil, errMessage
+   end
+   game.field = field
+
    function game:tick()
-      terminal.clear()
-      print("running")
       local event = self.input:getEvent()
-      print("pressed: " .. tostring(event))
+      self.field:render()
    end
 
    function game:cleanup()
