@@ -65,6 +65,17 @@ local function new(fieldWidth, fieldHeight)
    end
 
    function snake:setDirection(direction)
+      if (self.direction == "left" or self.direction == "right") and
+         (direction == "left" or direction == "right") then
+         -- Ignores case
+         return
+      end
+
+      if (self.direction == "up" or self.direction == "down") and
+         (direction == "up" or direction == "down") then
+         -- Ignores case
+         return
+      end
       self.direction = direction
    end
 
