@@ -1,7 +1,7 @@
 -- File describes terminator that is used for quiting application.
 
 function new()
-   t = {
+   local t = {
       code = 0,
       message = "exiting",
       triggerCallbacks = {},

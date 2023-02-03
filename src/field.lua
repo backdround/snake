@@ -46,10 +46,10 @@ local function new()
 
    -- Draws game field in terminal.
    function field:render(...)
-      objects = {...}
+      local objects = {...}
 
       -- Creates empty field
-      renderField = {}
+      local renderField = {}
       for y = 1, self.height do
          table.insert(renderField, {})
          for x = 1, self.width do

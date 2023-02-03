@@ -4,7 +4,7 @@
 posix = require("posix")
 
 local function new()
-  i = {}
+  local i = {}
   i.terminalState = posix.tcgetattr(posix.STDIN_FILENO)
 
   -- Configures terminal for get events without lock
@@ -21,7 +21,7 @@ local function new()
 
   -- Returns pressed key.
   function i:getEvent()
-    input = io.read()
+    local input = io.read()
 
     if not input then
       return nil

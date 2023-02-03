@@ -16,7 +16,7 @@ local function isDirection(event)
 end
 
 local function new(quit)
-   game = {
+   local game = {
       quit = quit
    }
    game.input = createInput()

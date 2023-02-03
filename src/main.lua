@@ -50,7 +50,7 @@ terminator:onTrigger(function()
 end)
 
 -- Handles sigint
-intSignal = uv.new_signal()
+local intSignal = uv.new_signal()
 uv.signal_start(intSignal, "sigint", function()
    triggerTermination()
 end)
@@ -59,7 +59,7 @@ terminator:onTrigger(function()
 end)
 
 -- Handles sigterm
-termSignal = uv.new_signal()
+local termSignal = uv.new_signal()
 uv.signal_start(termSignal, "sigterm", function()
    triggerTermination()
 end)
