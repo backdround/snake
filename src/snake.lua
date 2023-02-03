@@ -34,12 +34,12 @@ local function new(fieldWidth, fieldHeight)
 
       -- Checks out of bounds
       if forwardCoordinates.y > self.fieldHeight then
-         forwardCoordinates.y = 0
-      elseif forwardCoordinates.y < 0 then
+         forwardCoordinates.y = 1
+      elseif forwardCoordinates.y < 1 then
          forwardCoordinates.y = self.fieldHeight
       elseif forwardCoordinates.x > self.fieldWidth then
-         forwardCoordinates.x = 0
-      elseif forwardCoordinates.x < 0 then
+         forwardCoordinates.x = 1
+      elseif forwardCoordinates.x < 1 then
          forwardCoordinates.x = self.fieldWidth
       end
 
