@@ -29,6 +29,7 @@ static int l_getSize(lua_State* L) {
 
 static int l_clear(lua_State* L) {
     printf("\33[H\33[J\33[3J");
+    fflush(stdout);
     return 0;
 }
 
