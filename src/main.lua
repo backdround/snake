@@ -1,5 +1,8 @@
 #!/usr/bin/env lua
 
+-- Inits
+math.randomseed(os.time())
+
 -- Creates terminator
 local createTerminator = require('terminator')
 

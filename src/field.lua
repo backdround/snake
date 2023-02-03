@@ -6,7 +6,7 @@ local function calculateFieldSize()
       return {message = errorMessage}
    end
 
-   local minSize = 30
+   local minSize = 13
    if availableSize.width < minSize or availableSize.height < minSize then
       return {
          message = "terminal size must be greater than " .. tonumber(minSize)
@@ -64,6 +64,10 @@ local function new()
 
    function field:getSize()
       return self.width, self.height
+   end
+
+   function field:cleanup()
+      terminal.clear()
    end
 
    return field

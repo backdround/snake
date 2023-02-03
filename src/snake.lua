@@ -55,11 +55,18 @@ local function new(fieldWidth, fieldHeight)
       table.remove(self.bodyParts)
    end
 
-   function snake:symbol(x, y)
+   function snake:_isBody(x, y)
       for _, body in pairs(self.bodyParts) do
          if body.x == x and body.y == y then
-            return self.bodySymbol
+            return true
          end
+      end
+      return false
+   end
+
+   function snake:symbol(x, y)
+      if self:_isBody(x, y) then
+         return self.bodySymbol
       end
       return nil
    end
@@ -79,9 +86,24 @@ local function new(fieldWidth, fieldHeight)
       self.direction = direction
    end
 
-   function snake:tick(direction)
+   function snake:forward(direction)
       snake:_pushBody()
       snake:_popBody()
+   end
+
+   function snake:feed(direction)
+      snake:_pushBody()
+   end
+
+   function snake:isBumpIntoSelf()
+      if self:_isBody(self.head.x, self.head.y) then
+         return true
+      end
+      return false
+   end
+
+   function snake:getHead()
+      return self.head.x, self.head.y
    end
 
    -- Creates initial body parts
