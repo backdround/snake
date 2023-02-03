@@ -7,7 +7,7 @@ local function new(fieldWidth, fieldHeight)
       fieldWidth = fieldWidth,
       fieldHeight = fieldHeight,
       direction = "right",
-      bodySymbol = "#",
+      bodyPartSymbol = "#",
       bodyParts = {},
       head = {
          x = 0,
@@ -58,20 +58,27 @@ local function new(fieldWidth, fieldHeight)
       table.remove(self.bodyParts)
    end
 
-   function snake:_isBody(x, y)
-      for _, body in pairs(self.bodyParts) do
-         if body.x == x and body.y == y then
-            return true
-         end
-      end
-      return false
-   end
+   function snake:getRenderObjects()
+      renderParts = {}
 
-   function snake:symbol(x, y)
-      if self:_isBody(x, y) then
-         return self.bodySymbol
+      -- Adds body parts
+      for _, part in ipairs(self.bodyParts) do
+         renderPart = {
+            x = part.x,
+            y = part.y,
+            symbol = self.bodyPartSymbol,
+         }
+         table.insert(renderParts, renderPart)
       end
-      return nil
+
+      -- Adds head
+      table.insert(renderParts, {
+            x = self.head.x,
+            y = self.head.y,
+            symbol = self.bodyPartSymbol
+      })
+
+      return renderParts
    end
 
    function snake:setDirection(direction)
@@ -102,8 +109,10 @@ local function new(fieldWidth, fieldHeight)
 
    -- Checks if snake is bump itself without any action.
    function snake:isBumpIntoSelf()
-      if self:_isBody(self.head.x, self.head.y) then
-         return true
+      for _, part in pairs(self.bodyParts) do
+         if part.x == self.head.x and part.y == self.head.y then
+            return true
+         end
       end
       return false
    end

@@ -49,7 +49,9 @@ local function new(quit)
       end
 
       -- Renders
-      self.field:render({self.snake, self.food})
+      local snakeObjects = self.snake:getRenderObjects()
+      local foodObject = self.food:getRenderObject()
+      self.field:render(foodObject, table.unpack(snakeObjects))
    end
 
    function game:cleanup()

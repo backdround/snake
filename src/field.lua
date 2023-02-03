@@ -45,20 +45,27 @@ local function new()
    field.height = height
 
    -- Draws game field in terminal.
-   function field:render(objects)
-      objects = objects or {}
+   function field:render(...)
+      objects = {...}
 
-      terminal.clear()
+      -- Creates empty field
+      renderField = {}
       for y = 1, self.height do
+         table.insert(renderField, {})
          for x = 1, self.width do
-            local symbol = "."
-            for _, object in ipairs(objects) do
-               if object:symbol(x, y) then
-                  symbol = object:symbol(x, y)
-                  break
-               end
-            end
+            table.insert(renderField[y], ".")
+         end
+      end
 
+      -- Adds objects
+      for _, object in ipairs(objects) do
+         renderField[object.y][object.x] = object.symbol
+      end
+
+      -- Renders to terminal
+      terminal.clear()
+      for y, row in ipairs(renderField) do
+         for x, symbol in ipairs(row) do
             io.write(symbol)
          end
 

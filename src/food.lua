@@ -22,11 +22,12 @@ local function new(fieldWidth, fieldHeight)
       return false
    end
 
-   function food:symbol(x, y)
-      if self.x == x and self.y == y then
-         return "O"
-      end
-      return nil
+   function food:getRenderObject()
+      return {
+         x = self.x,
+         y = self.y,
+         symbol = "O",
+      }
    end
 
    food:_refresh()
