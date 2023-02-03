@@ -1,13 +1,15 @@
 inspect = require("inspect")
 
-local function new(width, height)
+local function new(fieldWidth, fieldHeight)
    local snake = {
+      fieldWidth = fieldWidth,
+      fieldHeight = fieldHeight,
       direction = "right",
       bodySymbol = "#",
       bodyParts = {},
       head = {
          x = 0,
-         y = math.floor(height / 2),
+         y = math.floor(fieldHeight / 2),
       },
    }
 
@@ -17,6 +19,7 @@ local function new(width, height)
          y = self.head.y,
       }
 
+      -- Adds direction
       if self.direction == "left" then
          forwardCoordinates.x = forwardCoordinates.x - 1
       elseif self.direction == "right" then
@@ -27,6 +30,17 @@ local function new(width, height)
          forwardCoordinates.y = forwardCoordinates.y + 1
       else
          error("unknown direction" .. self.direction)
+      end
+
+      -- Checks out of bounds
+      if forwardCoordinates.y > self.fieldHeight then
+         forwardCoordinates.y = 0
+      elseif forwardCoordinates.y < 0 then
+         forwardCoordinates.y = self.fieldHeight
+      elseif forwardCoordinates.x > self.fieldWidth then
+         forwardCoordinates.x = 0
+      elseif forwardCoordinates.x < 0 then
+         forwardCoordinates.x = self.fieldWidth
       end
 
       return forwardCoordinates
@@ -59,6 +73,7 @@ local function new(width, height)
       snake:_popBody()
    end
 
+   -- Creates initial body parts
    for i = 1, 5 do
       snake:_pushBody()
    end
