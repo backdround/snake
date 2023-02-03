@@ -6,6 +6,9 @@
 #include <unistd.h>
 #include <errno.h>
 
+// Gets terminal available size.
+// Returns table with `.width` and `.height` on success.
+// Returns nil and error message on fail.
 static int l_getSize(lua_State* L) {
     struct winsize size;
 
@@ -27,6 +30,7 @@ static int l_getSize(lua_State* L) {
     return 1;
 }
 
+// Clears terminal output.
 static int l_clear(lua_State* L) {
     printf("\33[H\33[J\33[3J");
     fflush(stdout);

@@ -1,3 +1,6 @@
+-- File describes object that can be used for receiven user key presses.
+-- It returns one last key that is user pressed in termianl.
+
 posix = require("posix")
 
 local function shallowcopy(t)
@@ -19,11 +22,12 @@ local function new()
   i.newAttributes.cc[posix.VTIME] = 0
   assert(posix.tcsetattr(posix.STDIN_FILENO, posix.TCSANOW, i.newAttributes))
 
+  -- Restores terminal in previous mode.
   function i:cleanup()
     assert(posix.tcsetattr(posix.STDIN_FILENO, posix.TCSANOW, self.terminalState))
   end
 
-  -- Returns pressed key
+  -- Returns pressed key.
   function i:getEvent()
     input = io.read()
 

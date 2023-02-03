@@ -1,3 +1,5 @@
+-- Represents a piece of snake food
+
 local function new(fieldWidth, fieldHeight)
    local food = {
       fieldWidth = fieldWidth,
@@ -11,6 +13,7 @@ local function new(fieldWidth, fieldHeight)
       self.y = math.random(1, self.fieldHeight)
    end
 
+   -- Consumes the food if coordinates matches.
    function food:consume(x, y)
       if self.x == x and self.y == y then
          self:_refresh()

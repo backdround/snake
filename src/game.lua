@@ -1,3 +1,5 @@
+-- File describes game logic
+
 local createInput = require("input")
 local createField = require("field")
 local createSnake = require("snake")

@@ -1,3 +1,5 @@
+-- File describes snake object
+
 inspect = require("inspect")
 
 local function new(fieldWidth, fieldHeight)
@@ -13,6 +15,7 @@ local function new(fieldWidth, fieldHeight)
       },
    }
 
+   -- Calculates the next cell in front of the snake's head.
    function snake:_getForwardCoordinates()
       local forwardCoordinates = {
          x = self.head.x,
@@ -86,15 +89,18 @@ local function new(fieldWidth, fieldHeight)
       self.direction = direction
    end
 
+   -- Makes the snake a cell forward.
    function snake:forward(direction)
       snake:_pushBody()
       snake:_popBody()
    end
 
+   -- Makes the snake a cell bigger.
    function snake:feed(direction)
       snake:_pushBody()
    end
 
+   -- Checks if snake is bump itself without any action.
    function snake:isBumpIntoSelf()
       if self:_isBody(self.head.x, self.head.y) then
          return true

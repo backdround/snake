@@ -1,5 +1,8 @@
+-- File describes game field that is used for rendering in terminal.
+
 local terminal = require("terminal")
 
+-- Calculates suitable field size, based on terminal available size.
 local function calculateFieldSize()
    local availableSize, errorMessage = terminal.getSize()
    if not availableSize then
@@ -32,7 +35,7 @@ end
 local function new()
    local field = {}
 
-   -- Gets size
+   -- Gets size.
    local err, width, height = calculateFieldSize()
    if err then
       local errMessage = "Unable to get terminal size: " .. err.message
@@ -41,6 +44,7 @@ local function new()
    field.width = width
    field.height = height
 
+   -- Draws game field in terminal.
    function field:render(objects)
       objects = objects or {}
 
